@@ -1,3 +1,43 @@
+var products = [
+	{
+		category: 'Sporting Goods',
+		price: '$49.99',
+		name: 'Football',
+		inStock: true
+	},
+	{
+		category: 'Sporting Goods',
+		price: '$9.99',
+		name: 'Baseball',
+		inStock: true
+	},
+	{
+		category: 'Sporting Goods',
+		price: '$29.99',
+		name: 'Basketball',
+		inStock: false
+	},
+
+	{
+		category: 'Electronics',
+		price: '$99.99',
+		name: 'iPod Touch',
+		inStock: true
+	},
+	{
+		category: 'Electronics',
+		price: '$399.99',
+		name: 'iPhone 5',
+		inStock: false
+	},
+	{
+		category: 'Electronics',
+		price: '$199.99',
+		name: 'Nexus 7',
+		inStock: true
+	}
+]
+
 function ProductCategoryRow(props){
 	return(
 		<tr>
@@ -9,24 +49,53 @@ function ProductCategoryRow(props){
 function ProductRow(props){
 	return(
 		<tr>
-			<td>Football</td>
-			<td>$19.99</td>
+			<td>{props.name}</td>
+			<td>${props.price}</td>
 		</tr>
 	)
 }
 
 function ProductTable(props){
+
+	//init a local var to hold all our rows
+	var rows = [];
+	//init a local var to keep track of what category we are on
+	var lastCategory = "";
+	products.forEach(function(product, index){
+		console.log(index);
+		if(product.category !== lastCategory){
+			//we need to add this to our rows array because it is a new category
+			rows.push(<ProductCategoryRow key={product.category} category={product.category} />)
+			lastCategory = product.category;
+		}
+		rows.push(<ProductRow key={index} product={product} />)
+	});
+console.log(rows);
+
 	return(
-		<div>
-			<ProductCategoryRow />
-			<ProductRow />
-		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				{rows}
+			</tbody>
+		</table>
 	)
 }
 
 function SearchBar(props){
 	return(
-		<input type="text" />)
+		<form class="search-bar">
+			<input type="text" placeholder="Search..." />
+			<div>
+			<input type="checkbox" />&nbsp;Only show products in stock
+			</div>
+		</form>
+	)
 }
 
 // ^ same as class SearchBar extends React.Component{
@@ -37,7 +106,7 @@ function SearchBar(props){
 
 function FilterableProductTable(props){
 	return(
-		<div>
+		<div className="filterable-product-table">
 			<SearchBar />
 			<ProductTable />
 		</div>)
@@ -56,3 +125,37 @@ ReactDOM.render(
 	<Application />,
 	document.getElementById('container')
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
