@@ -47,9 +47,14 @@ function ProductCategoryRow(props){
 }
 
 function ProductRow(props){
+	if(props.product.inStock === true){
+		var productClass = "text-success"
+	}else{
+		var productClass = "text-danger"
+	}
 	return(
 		<tr>
-			<td>{props.product.name}</td>
+			<td className={productClass}>{props.product.name}</td>
 			<td>{props.product.price}</td>
 		</tr>
 	)
