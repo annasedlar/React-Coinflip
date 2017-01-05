@@ -49,8 +49,8 @@ function ProductCategoryRow(props){
 function ProductRow(props){
 	return(
 		<tr>
-			<td>{props.name}</td>
-			<td>${props.price}</td>
+			<td>{props.product.name}</td>
+			<td>{props.product.price}</td>
 		</tr>
 	)
 }
@@ -61,14 +61,17 @@ function ProductTable(props){
 	var rows = [];
 	//init a local var to keep track of what category we are on
 	var lastCategory = "";
+	var key = 0;
 	products.forEach(function(product, index){
 		console.log(index);
 		if(product.category !== lastCategory){
 			//we need to add this to our rows array because it is a new category
-			rows.push(<ProductCategoryRow key={product.category} category={product.category} />)
+			rows.push(<ProductCategoryRow key={key} category={product.category} />)
 			lastCategory = product.category;
+			key++;
 		}
-		rows.push(<ProductRow key={index} product={product} />)
+		rows.push(<ProductRow key={key} product={product} />)
+		key++;
 	});
 console.log(rows);
 
